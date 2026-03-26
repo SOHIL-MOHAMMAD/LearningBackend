@@ -10,3 +10,12 @@ class Member(models.Model):
   
   def __str__(self):
     return f"{self.firstname} {self.lastname} {self.age}"
+  
+  
+class FormModel(models.Model):
+  title = models.CharField(max_length=50)
+  description = models.TextField()
+  last_modified = models.DateTimeField( auto_now_add=True)
+  
+  def __str__(self):
+    return self.title
