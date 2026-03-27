@@ -1,0 +1,28 @@
+<html>
+<body> 
+
+  <table>
+  
+    <tr>
+      <th>first name</th>
+      <th>last name </th>
+      <th>age</th>
+      <th>Degree</th>
+    </tr>
+
+    {% for x in List%}
+      <tr>
+      <td>{{x.first_name}}</td>
+      <td>{{x.last_name}}</td>
+      <td>{{x.age}}</td>
+      <td>{{x.degree}}</td>
+    </tr>
+    {% endfor %}
+
+
+  
+  </table>
+  
+<body/>
+
+</html>

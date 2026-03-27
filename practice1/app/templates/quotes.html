@@ -1,0 +1,19 @@
+<body> 
+  <h1>
+    {{rdm}}
+  </h1>
+
+  <button  onclick='getQuote()'> 
+    click here
+  </button>
+
+  <script>
+  
+    function getQuote(){
+      window.location.href = "{% url 'randomQuote' %}"
+    }
+  
+  </script>
+  
+  
+</body>
