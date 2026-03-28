@@ -1,8 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 import datetime
 import random
-from .models import Student
+from .models import Student, Person, TODO
+from .form import TodoForm
 # Create your views here.
 
 
@@ -11,13 +12,16 @@ def date(request):
   return HttpResponse(x)
 
 def home(request):
-  return render(request,'home.html')
+  title = 'ye hai home page'
+  return render(request,'home.html', {'title': title})
 
 def about(request):
-  return render(request,'about.html')
+  title = 'ye hai about page'
+  return render(request,'about.html', {'title':title})
 
 def contact(request):
-  return render(request,'contact.html')
+  title = 'ye hai contact page'
+  return render(request,'contact.html',{'title':title})
 
 def name(request , n):
   user = n
@@ -40,4 +44,52 @@ def randomQuote(request):
 
 def Student_list(request):
   List = Student.objects.all()
-  return render(request,'Student.html',{'List': List})
+  return render(request,'Student.html', {'List': List})
+
+
+def Person_List(request):
+  title = 'person list with the age of grater than 18'
+  List = Person.objects.all()
+  return render(request,'person.html',{'List':List ,'title':title})
+
+# read
+def todo_list(request):
+  todos = TODO.objects.all()
+  return render(request, 'todo/list.html', {'todos': todos})
+
+# create
+def add_todo(request):
+  if request.method == 'POST':
+    form = TodoForm(request.POST)
+    if form.is_valid():
+      form.save()
+      return redirect('todo_list')
+    
+  else:
+    form = TodoForm()
+  return render(request,'todo/form.html',{'form':form})
+
+
+# update
+
+def update_todo(request, id):
+  todo = get_object_or_404(TODO, id=id )
+  
+  if request.method == 'POST':
+    form = TodoForm(request.POST, instance= todo)
+    if form.is_valid():
+      form.save()
+      return redirect('todo_list')
+  else:
+    form = TodoForm(instance=todo)
+    
+  return render(request , 'todo/form.html', {'form': form})
+
+def delete_todo(request, id):
+  todo = get_object_or_404(TODO, id=id)
+  todo.delete()
+  return redirect('todo_list')
+
+
+  
+  
