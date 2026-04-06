@@ -19,3 +19,20 @@ class FormModel(models.Model):
   
   def __str__(self):
     return self.title
+
+
+class Post(models.Model):
+  MALE = 'M'
+  FEMALE = 'F'
+  GENDER_CHOICE =[
+    (MALE,'Male'),
+    (FEMALE, 'Female'),
+  ]
+  
+  username = models.CharField( max_length=50, blank=False, null=False)
+  text = models.TextField(blank=False, null=False)
+  gender = models.CharField( max_length=6, choices= GENDER_CHOICE, default=MALE)
+  time = models.DateField( auto_now_add=True)
+  
+  def __str__(self):
+    return self.username

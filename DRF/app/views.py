@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse
-from app.serializer import PRoductSerializer
-from .models import Product
+from app.serializer import PRoductSerializer , OrderSerializer, OrderItemSerializer
+from .models import Product, Order, OrderItem
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 # Create your views here.
@@ -24,3 +24,11 @@ def product_Detail(request, pk):
   
   return Response(serializer.data)
   
+  
+  
+@api_view(['GET'])
+def order_list(request):
+  order = Order.objects.all()
+  serializer = OrderSerializer(order, many = True)
+  
+  return Response(serializer.data)
